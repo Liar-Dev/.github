@@ -90,6 +90,5 @@ Result-Server
 - 다음 프로젝트는 Spring Cloud를 잘 사용하기 위해서킷 브레이커와 카프카를 도입하여 다양한 방식으로 기술을 적용해보고 싶습니다.
 
 
-## 👏 With (디자인) SeoulTech 시각디자인
 
 
