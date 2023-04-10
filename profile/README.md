@@ -1,4 +1,4 @@
-Liar-Game Dev 버전 API 서버 (임시 ReadMe 입니다!)
+Liar-Game Dev 버전 API 서버
 ======================
 
 # 1. 주제 
