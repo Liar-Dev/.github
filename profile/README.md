@@ -1,13 +1,18 @@
 Liar-Game Dev 버전 API 서버
 ======================
 
-# 1. 주제 
-** MSA 아키텍처로 구성된 '라이어'를 찾는 실시간 웹 게임 1인 프로젝트입니다.**
-
+# 1. 주제 및 방식 
+* MSA 아키텍처로 구성된 '라이어'를 찾는 실시간 웹 게임 1인 프로젝트 입니다. 
+* 라이어 게임은 4 ~ 20명의 유저가 참여하여 시민 혹은 라이어를 배정받습니다.
+* 시민에게는 주제를 알려주고, 라이어는 주제를 받지 못합니다.
+* 주어진 주제를 바탕으로 그 주제를 라이어에게 들키지 않고 설명하고, 라이어는 시민이 설명하는 것을 읽고 자신의 정체가 들키지 않게 그 주제를 설명해야 합니다.
+* 턴이 모두 종료되면 유저들은 투표를 통해 라이어를 지목합니다.
+* 라이어를 지목한다면 주제를 맞출 수 있는 기회가 생기고, 라이어가 아닌 다른 시민이 다득표가 된다면(동률 포함) 라이어가 승리합니다.
+* 신서유기 '라이어 게임' https://www.youtube.com/watch?v=oJdGyCobS4g
 
 # 2. 기술 스택
 #### - Framework: SpringBoot3.0.2, SpringCloud </br>
-#### - ORM: Spring Data JPA, SpringQueryDsl </br>
+#### - ORM: Spring Data JPA </br>
 #### - Infra: AWS EC2, AWS RDS(MySQL8.0.28), AWS ElasticCache(Redis), AWS SQS </br>
 #### - OS: Linux Ubuntu22.04
 
@@ -19,11 +24,13 @@ Liar-Game Dev 버전 API 서버
 ## 3.2 EC2 배포 인프라
 ![image](https://user-images.githubusercontent.com/88478829/229705478-5d6165f9-c21b-496f-bc04-210c0a16f5f4.png)
 - 비용적인 문제로 인해, t2.micro의 메모리가 허용하는 한도까지 여러 개의 서버를 동일 인스턴스에 배포하였습니다. 
+- 박스 표시는 t2.micro 인스턴스 하나에 포함되어 있는 서버를 의미합니다.
 
-## 3.3 데이터베이스 인프라
+## 3.3 RDBMS 데이터베이스 인프라
 ![image](https://user-images.githubusercontent.com/88478829/229705548-30c05032-9ad9-4677-8d05-3e6dd0de61df.png)
+- AWS 에서는 RDS를 활용하여 데이터베이스를 구현하였습니다.
 
-## 3.4 Redis 인프라
+## 3.4 NO-SQL 인프라
 ![image](https://user-images.githubusercontent.com/88478829/229705666-484faa1d-5194-424f-9bc0-486500a1d59c.png)
 - Gateway, Member, Wait, Game 서버는 Redis를 인메모리 데이터베이스로 활용하고 있습니다.
 - Result 서버는 RedissonClient를 활용하기 위한 Redis 서버로 활용하였습니다.
@@ -82,6 +89,7 @@ Result-Server
 - 동시성 문제를 해결하는 과정에서 Result-Server에서 player의 레벨 업을 시키는 과정에 데이터 동기화가 이뤄지지 않았습니다.
 - 일부 프론트를 생성하여 WebsocketTest를 진행하였지만, stmopClient의 경우 계속된 에러로 인해 테스트 방향을 API 호출 결과의 동일성 비교로 바꾸게 되었습니다. 이 부분은 추후 계속 연구해나가서 stompClient를 통해 프론트를 작성하지 않고도 소켓 API 테스트가 진행될 수 있도록 하겠습니다.
 - Jenkins - Docker로 CI/CD를 구축하고 싶었지만, 도커 배포 시 많은 메모리 소모로 초과 비용이 발생하여 개별 배포로 진행하였습니다.
+- 라이어가 정답을 맞출 수 있는 기회를 제공하는 부분은 구현까지 마무리하지 못하였습니다.
 
 # 7. 배울 수 있었던 점
 - 1인 프로젝트로 MSA를 구축하며, 서버 간 연동 시 중복되는 코드를 처리하기 위한 인증 통합화 과정을 배울 수 있었습니다.
