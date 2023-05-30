@@ -35,10 +35,6 @@ Liar-Game Dev 버전 API 서버
 - Gateway, Member, Wait, Game 서버는 Redis를 인메모리 데이터베이스로 활용하고 있습니다.
 - Result 서버는 RedissonClient를 활용하기 위한 Redis 서버로 활용하였습니다.
 
-## 3.5 데이터 파이프라인 인프라
-![image](https://user-images.githubusercontent.com/88478829/229705736-41b21ab1-8b77-4ead-ac8b-1f899e1eb8c1.png)
-- 서버 투 서버의 전송을 위해 AWS SQS를 적용하였습니다.
-
 # 4. 주요 목표
 - 테스트 코드 준수
 - 트랜잭션 관리
